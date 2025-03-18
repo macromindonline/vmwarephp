@@ -13,7 +13,7 @@ class Service {
 	function __construct(Vhost $vhost, \Vmwarephp\Factory\SoapClient $soapClientFactory = null) {
 		$this->vhost = $vhost;
 		$this->clientFactory = $soapClientFactory ? : new \Vmwarephp\Factory\SoapClient();
-		$this->soapClient = $this->clientFactory->make($this->vhost, 1, 1, $this->host->validateCerts);
+		$this->soapClient = $this->clientFactory->make($this->vhost, 1, 1, $this->vhost->validateCerts);
 		$this->typeConverter = new TypeConverter($this);
 	}
 
