@@ -65,7 +65,7 @@ class Service {
 		return $this->typeConverter->convert($response);
 	}
 
-	private function makeSoapCall($method, $soapMessage) {
+	function makeSoapCall($method, $soapMessage) {
 		$this->soapClient->_classmap = $this->clientFactory->getClientClassMap();
 		try {
 			$result = $this->soapClient->$method($soapMessage);
