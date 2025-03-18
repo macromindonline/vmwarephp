@@ -11,7 +11,7 @@ class SoapClient {
 		$this->wsdlFilePath = $wsdlFilePath ? : $this->getWsdlFilePath();
 	}
 
-	function make(\Vmwarephp\Vhost $vhost, $useExceptions = 1, $trace = 1) {
+	function make(\Vmwarephp\Vhost $vhost, $useExceptions = 1, $trace = 1, $validateCerts = 1) {
 		$options = array(
 			'trace' => $trace,
 			'location' => $this->makeRequestsLocation($vhost),
@@ -20,6 +20,20 @@ class SoapClient {
 			'classmap' => $this->wsdlClassMapper->getClassMap(),
 			'features' => SOAP_SINGLE_ELEMENT_ARRAYS + SOAP_USE_XSI_ARRAY_TYPE
 		);
+		
+		if(! $validateCerts) {
+			$options = array_merge($options, [
+				'stream_context' => stream_context_create([
+				'http' => ['user_agent' => 'PHPSoapClient'],
+				'ssl' => [
+					'verify_peer' => false,
+					'verify_peer_name' => false,
+					'allow_self_signed' => true
+				]
+				])
+		       ]);
+		}
+
 		$soapClient = $this->makeDefaultSoapClient($this->wsdlFilePath, $options);
 		if (!$soapClient) throw new Ex\CannotCreateSoapClient();
 		return $soapClient;
