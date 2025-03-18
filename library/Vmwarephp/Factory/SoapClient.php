@@ -24,14 +24,14 @@ class SoapClient {
 		if(! $validateCerts) {
 			$options = array_merge($options, [
 				'stream_context' => stream_context_create([
-				'http' => ['user_agent' => 'PHPSoapClient'],
-				'ssl' => [
-					'verify_peer' => false,
-					'verify_peer_name' => false,
-					'allow_self_signed' => true
-				]
+					'http' => ['user_agent' => 'PHPSoapClient'],
+					'ssl' => [
+						'verify_peer' => false,
+						'verify_peer_name' => false,
+						'allow_self_signed' => true
+					]
 				])
-		       ]);
+			]);
 		}
 
 		$soapClient = $this->makeDefaultSoapClient($this->wsdlFilePath, $options);
