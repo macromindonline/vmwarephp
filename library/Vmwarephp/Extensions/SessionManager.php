@@ -10,11 +10,7 @@ class SessionManager extends \Vmwarephp\ManagedObject {
 		if ($this->session) {
 			return $this->session;
 		}
-		try {
-			$this->session = $this->acquireSessionUsingCloneTicket();
-		} catch (\Exception $e) {
-			$this->session = $this->acquireANewSession($userName, $password);
-		}
+		$this->session = $this->acquireANewSession($userName, $password);
 		return $this->session;
 	}
 
